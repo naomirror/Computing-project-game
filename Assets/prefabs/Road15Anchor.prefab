@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8070527518369759981}
   - component: {fileID: 8070527518369759970}
   - component: {fileID: 8070527518369759971}
+  - component: {fileID: 3435990274579939006}
+  - component: {fileID: 5555323554366440152}
   m_Layer: 0
   m_Name: road15
   m_TagString: Untagged
@@ -95,9 +97,37 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8781900390150057970, guid: bb105b1c13d77734ebde80e9c097824a, type: 3}
+--- !u!54 &3435990274579939006
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8070527518369759968}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!114 &5555323554366440152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8070527518369759968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b204f765b1d1294eac0afe1bcbece63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8070527518606891415
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +139,6 @@ GameObject:
   - component: {fileID: 8070527518606891414}
   - component: {fileID: 8070527518606891411}
   - component: {fileID: 8070527518606891408}
-  - component: {fileID: 8070527518606891409}
   m_Layer: 0
   m_Name: RoadEnd
   m_TagString: Untagged
@@ -180,19 +209,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8070527518606891409
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8070527518606891415}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8070527519485291912
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +220,6 @@ GameObject:
   - component: {fileID: 8070527519485291892}
   - component: {fileID: 8070527519485291893}
   - component: {fileID: 8070527519485291914}
-  - component: {fileID: 8070527519485291915}
   - component: {fileID: 8070527519485291895}
   m_Layer: 0
   m_Name: Road15Anchor
@@ -277,19 +292,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8070527519485291915
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8070527519485291912}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8070527519485291895
 MonoBehaviour:
   m_ObjectHideFlags: 0
