@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CollisionDetection : MonoBehaviour
 {
+	public GameObject intersectingRoad;
+	public bool colliding = false;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -17,14 +19,14 @@ public class CollisionDetection : MonoBehaviour
 	}
 
 	public void OnCollisionEnter(Collision col){
-		if (col.transform.parent.name == "Tocus") {
-			Debug.Log ("Car colliding with ground");
-		}
-
-		else if (Mathf.Round(this.transform.parent.position.x) != Mathf.Round(col.transform.Find ("RoadEnd").position.x) && Mathf.Round(this.transform.parent.position.z) != Mathf.Round(col.transform.Find ("RoadEnd").position.z) && Mathf.Round(this.transform.Find("RoadEnd").position.x) != Mathf.Round(col.transform.parent.position.x) && Mathf.Round(this.transform.Find("RoadEnd").position.z) != Mathf.Round(col.transform.parent.position.z)) {
+		
+		if (Mathf.Round(this.transform.parent.position.x) != Mathf.Round(col.transform.Find ("RoadEnd").position.x) && Mathf.Round(this.transform.parent.position.z) != Mathf.Round(col.transform.Find ("RoadEnd").position.z) && Mathf.Round(this.transform.Find("RoadEnd").position.x) != Mathf.Round(col.transform.parent.position.x) && Mathf.Round(this.transform.Find("RoadEnd").position.z) != Mathf.Round(col.transform.parent.position.z)) {
 			//Destroy (col.gameObject);
-
-			Debug.Log (this.transform.parent.name + "Begin Position: " + this.transform.parent.position + " against " + col.gameObject.name + "End Position: " + col.transform.Find("RoadEnd").position + "\r\n" + this.transform.parent.name + "End Position: " + this.transform.Find("RoadEnd").position + " against " + col.gameObject.name + "Begin Position: " + col.transform.parent.position);
+			colliding = true;
+			intersectingRoad = col.gameObject;
+			Debug.Log (colliding);
+			Debug.Log ("Colliding With: " + intersectingRoad.name);
+			//Debug.Log (this.transform.parent.name + "Begin Position: " + this.transform.parent.position + " against " + col.gameObject.name + "End Position: " + col.transform.Find("RoadEnd").position + "\r\n" + this.transform.parent.name + "End Position: " + this.transform.Find("RoadEnd").position + " against " + col.gameObject.name + "Begin Position: " + col.transform.parent.position);
 		}
 
 	}

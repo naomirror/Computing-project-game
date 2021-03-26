@@ -25,6 +25,28 @@ public class RoadManager : MonoBehaviour
 			} else {
 				x = 5;
 			}
+			yield return new WaitForSeconds (0.02f);
+			CollisionDetection roadCollisionScript = newRoad.GetChild(0).GetComponent<CollisionDetection> ();
+			if (roadCollisionScript.colliding == true) {
+				//newRoad.gameObject.active = false;
+				if (newRoad.GetChild (0).name == "road") {
+					newRoad.GetChild (0).GetChild (0).GetComponent<MeshRenderer> ().enabled = false;
+				} else {
+					newRoad.GetChild (0).gameObject.GetComponent<MeshRenderer> ().enabled = false;
+				}
+				while (roadCollisionScript.colliding == true) {
+					if (roadCollisionScript.intersectingRoad.tag == "FinishedContact") {
+						Destroy (roadCollisionScript.intersectingRoad);
+						roadCollisionScript.colliding = false;
+						if (newRoad.GetChild (0).name == "road") {
+							newRoad.GetChild (0).GetChild (0).GetComponent<MeshRenderer> ().enabled = true;
+						} else {
+							newRoad.GetChild (0).gameObject.GetComponent<MeshRenderer> ().enabled = true;
+						}
+					}
+					else yield return new WaitForSeconds (5f);
+				}
+			}
 			yield return new WaitForSeconds (spawnDelay);
 		}
     }
