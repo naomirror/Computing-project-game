@@ -48,9 +48,14 @@ public class CarMovement : MonoBehaviour
 		} 
 	}
 	void OnCollisionEnter(Collision collision){
-		Debug.Log ("hit");
-		if (collision.gameObject.name == "road") {
-			Debug.Log ("hit the road");
-		}
+		Debug.Log ("hit " + collision.transform.name);
+
+		collision.transform.gameObject.tag = "InContact";
+	}
+
+	void OnCollisionExit(Collision collision){
+		Debug.Log ("No longer in contact with "+ collision.transform.gameObject.name);
+
+		collision.transform.gameObject.tag = "FinishedContact";
 	}
 }
