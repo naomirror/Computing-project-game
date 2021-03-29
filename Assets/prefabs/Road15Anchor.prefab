@@ -128,6 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b204f765b1d1294eac0afe1bcbece63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  intersectingRoad: []
+  colliding: 0
 --- !u!1 &8070527518606891415
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,8 +238,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8070527519485291912}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1.0000001}
-  m_LocalPosition: {x: 46.4, y: 0, z: -21.6}
-  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_LocalPosition: {x: 46.4, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 0.1, z: 2}
   m_Children:
   - {fileID: 8070527519502771940}
   m_Father: {fileID: 0}

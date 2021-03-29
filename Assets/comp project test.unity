@@ -156,7 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4013073016293618, guid: 02e641040fb499c49a848e40f535164a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.77
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 4013073016293618, guid: 02e641040fb499c49a848e40f535164a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -248,6 +248,8 @@ MonoBehaviour:
   maxSpeed: 100
   highSpeedSteeringAngle: 10
   lowSpeedSteeringAngle: 30
+  resetPosition: {x: 0, y: 0, z: 0}
+  resetRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!850595691 &383777322
 LightingSettings:
   m_ObjectHideFlags: 0
