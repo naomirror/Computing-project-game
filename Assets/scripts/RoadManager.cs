@@ -5,6 +5,9 @@ using UnityEngine;
 public class RoadManager : MonoBehaviour
 {
 	public List<GameObject> roads;
+	public GameObject tree;
+	public GameObject collectible;
+	public GameObject roadBlock;
 	public Transform lastRoad;
 	public Transform newRoad;
 	public float spawnDelay = 1f;
@@ -12,6 +15,7 @@ public class RoadManager : MonoBehaviour
 	IEnumerator Start()
     {
 		int x = 5;
+		Renderer r;
 		while (true) {
 			/*newRoad = Instantiate (roads [0], lastRoad.position, lastRoad.rotation * Quaternion.Euler (180f * Random.Range (0, 2), 0f, 15f)).GetComponent<Transform> ();
 			lastRoad = newRoad.GetChild(0).Find("RoadEnd");
@@ -43,7 +47,7 @@ public class RoadManager : MonoBehaviour
 					}
 					if (wait == false) {
 						foreach (GameObject road in roadCollisionScript.intersectingRoad) {
-							Destroy (road);
+							Destroy (road.transform.parent.gameObject);
 						}
 						roadCollisionScript.colliding = false;
 						if (newRoad.GetChild (0).name == "road") {
@@ -55,6 +59,20 @@ public class RoadManager : MonoBehaviour
 					yield return new WaitForSeconds (3f);
 				}
 			}
+			if (newRoad.GetChild (0).name == "road") {
+				 r = newRoad.GetChild (0).GetChild (0).GetComponent<Renderer> ();
+			} else {
+				r = newRoad.GetChild (0).GetComponent<Renderer> ();
+			}
+
+			float randomX = Random.Range(r.bounds.min.x, r.bounds.max.x);
+			float randomZ = Random.Range(r.bounds.min.z, r.bounds.max.z);
+
+			RaycastHit hit;
+			if (Physics.Raycast(new Vector3(randomX, r.bounds.max.y + 5f, randomZ), -Vector3.up, out hit)) {
+				//GameObject treeSpawn =Instantiate (tree, new Vector3 (randomX, r.bounds.max.y, randomZ), Quaternion.Euler(-90f,0f,0f));
+				//treeSpawn.transform.parent = newRoad.GetChild (0).transform;
+			} 
 			yield return new WaitForSeconds (spawnDelay);
 		}
     }

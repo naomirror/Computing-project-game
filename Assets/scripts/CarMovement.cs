@@ -7,6 +7,7 @@ public class CarMovement : MonoBehaviour
 	public GameObject backLeftWheel, backRightWheel, frontLeftWheel, frontRightWheel;
     WheelCollider blWheel, brWheel,flWheel,frWheel;
 	public Rigidbody car;
+	public float carVelocity;
 	// Start is called before the first frame update
 	public float torque, brakeTorque, maxSpeed, highSpeedSteeringAngle, lowSpeedSteeringAngle;
 
@@ -24,7 +25,7 @@ public class CarMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		float carVelocity = this.gameObject.GetComponent<Rigidbody> ().velocity.magnitude;
+		 carVelocity = this.gameObject.GetComponent<Rigidbody> ().velocity.magnitude;
 		if (Input.GetAxis ("Vertical") > 0 && carVelocity < maxSpeed) {
 			blWheel.motorTorque = torque;
 			brWheel.motorTorque = torque;
