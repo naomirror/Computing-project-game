@@ -29,12 +29,18 @@ public class CarMovement : MonoBehaviour
 		if (Input.GetAxis ("Vertical") > 0 && carVelocity < maxSpeed) {
 			blWheel.motorTorque = torque;
 			brWheel.motorTorque = torque;
-		} else if (Input.GetAxis ("Vertical") < 0 && carVelocity > 0) {
+		} else if (Input.GetAxis ("Vertical") < 0 && carVelocity >= 0) {
 			blWheel.brakeTorque = brakeTorque;
 			brWheel.brakeTorque = brakeTorque;
 			flWheel.brakeTorque = brakeTorque;
 			frWheel.brakeTorque = brakeTorque;
 		} 
+		else if (Input.GetKey (KeyCode.Space)) {
+			Debug.Log ("Space pressed reversing");
+			blWheel.motorTorque = -torque;
+			brWheel.motorTorque = -torque;
+		} 
+
 		else
 		{
 			blWheel.brakeTorque = 0;
