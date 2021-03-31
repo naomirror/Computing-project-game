@@ -24,6 +24,7 @@ public class RoadManager : MonoBehaviour
 */
 			newRoad = Instantiate (roads [Random.Range(0,x)], lastRoad.position, lastRoad.rotation 	* Quaternion.Euler(180f*Random.Range(0,2), 0f, 0f)).GetComponent<Transform> ();
 			lastRoad = newRoad.GetChild(0).Find("RoadEnd");
+			Debug.Log (newRoad.GetChild (0).name + " coordinates: " + newRoad.GetChild (0).Find ("RoadEnd").transform.eulerAngles);
 			if (newRoad.GetChild(0).name == "road u turn") {
 				x = 4;
 			} else {
@@ -70,6 +71,8 @@ public class RoadManager : MonoBehaviour
 
 			RaycastHit hit;
 			if (Physics.Raycast(new Vector3(randomX, r.bounds.max.y + 5f, randomZ), -Vector3.up, out hit)) {
+				GameObject collectibleSpawn =Instantiate (collectible, new Vector3 (randomX, r.bounds.max.y + 1f, randomZ), Quaternion.identity);
+				//collectibleSpawn.transform.parent = newRoad.GetChild (0).transform;
 				//GameObject treeSpawn =Instantiate (tree, new Vector3 (randomX, r.bounds.max.y, randomZ), Quaternion.Euler(-90f,0f,0f));
 				//treeSpawn.transform.parent = newRoad.GetChild (0).transform;
 			} 

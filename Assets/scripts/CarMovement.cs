@@ -58,6 +58,11 @@ public class CarMovement : MonoBehaviour
 		this.GetComponent<Rigidbody>().isKinematic = true;
 		this.transform.position = resetPosition;
 		this.transform.rotation = resetRotation;
+		this.transform.eulerAngles = new Vector3(
+			this.transform.eulerAngles.x,
+			this.transform.eulerAngles.y,
+			0f
+		);
 		this.GetComponent<Rigidbody>().isKinematic = false;
 	}
 
