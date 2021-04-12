@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoadManager : MonoBehaviour
 {
-	public List<GameObject> roads;
+	public List<GameObject> roads, roadSpawn, roadPick;
 	public GameObject tree;
 	public GameObject collectible;
 	public GameObject roadBlock;
@@ -80,6 +80,84 @@ public class RoadManager : MonoBehaviour
 		}
     }
 
+	void setRoadProbabilities(float averageSpeed){
+		int a, b, c, d, e, treeProbability;
+		roadPick.Clear ();
+		if (averageSpeed <= 8) {
+			a = 50;
+			b = 50;
+			c = 0;
+			d = 0;
+			e = 0;
+			treeProbability = 0;
+		} else if (averageSpeed > 8 && averageSpeed < 10) {
+			a = 34;
+			b = 33;
+			c = 33;
+			d = 0;
+			e = 0;
+			treeProbability = 5;
+		}
+		else if (averageSpeed > 10 && averageSpeed < 12) {
+			a = 20;
+			b = 30;
+			c = 30;
+			d = 20;
+			e = 0;
+			treeProbability = 10;
+		}
+		else if (averageSpeed > 12 && averageSpeed < 14) {
+			a = 20;
+			b = 10;
+			c = 30;
+			d = 15;
+			e = 15;
+			treeProbability = 15;
+		}
+		else if (averageSpeed > 14 && averageSpeed < 16) {
+			a = 15;
+			b = 20;
+			c = 25;
+			d = 20;
+			e = 20;
+			treeProbability = 20;
+		}
+		else if (averageSpeed > 16 && averageSpeed < 18) {
+			a = 10;
+			b = 15;
+			c = 25;
+			d = 25;
+			e = 25;
+			treeProbability = 25;
+		}
+		else if (averageSpeed > 18 && averageSpeed < 20) {
+			a = 10;
+			b = 10;
+			c = 20;
+			d = 30;
+			e = 30;
+			treeProbability = 30;
+		}
+		else if (averageSpeed > 20) {
+			a = 0;
+			b = 10;
+			c = 30;
+			d = 30;
+			e = 30;
+			treeProbability = 35;
+		}
+
+		addToRoadPick (a, 0);
+		addToRoadPick (b, 1);
+		addToRoadPick (c, 2);
+		addToRoadPick (d, 3);
+		addToRoadPick (e, 4);
+	}
+	void addToRoadPick(int amount, int roadType){
+		for (int i = 0; i < amount; i++) {
+			roadPick.Add (roads [roadType]);
+		}
+	}
     // Update is called once per frame
     void Update()
     {
