@@ -25,7 +25,6 @@ public class Scores : MonoBehaviour
 		time = Time.time;
 		minutes = Mathf.FloorToInt (time / 60);
 		seconds = Mathf.FloorToInt (time % 60);
-		Debug.Log (time);
 		if (seconds == 30 || seconds == 60) {
 			averageCount = 1;
 			speed = Mathf.Round (cm.carVelocity);

@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class RoadManager : MonoBehaviour
 {
+	public Scores score;
 	public List<GameObject> roads, roadSpawn, roadPick;
 	public GameObject tree;
 	public GameObject collectible;
@@ -11,17 +11,29 @@ public class RoadManager : MonoBehaviour
 	public Transform lastRoad;
 	public Transform newRoad;
 	public float spawnDelay = 1f;
-    // Start is called before the first frame update
-	IEnumerator Start()
-    {
+	int roadToSpawnIncrement = 0;
+	bool first = true;
+	CollisionDetection roadCollisionScript;
+	Renderer r;
+	// Start is called before the first frame update
+	void Start()
+	{
+		score = GameObject.Find ("Tocus").GetComponent<Scores> ();
+		setRoadProbabilities (13);
+		addRoadSegmentsToSpawn ();
+		roadCollisionScript = lastRoad.parent.GetComponent<CollisionDetection>();
+
+
+
+		/*
 		int x = 5;
 		Renderer r;
 		while (true) {
-			/*newRoad = Instantiate (roads [0], lastRoad.position, lastRoad.rotation * Quaternion.Euler (180f * Random.Range (0, 2), 0f, 15f)).GetComponent<Transform> ();
-			lastRoad = newRoad.GetChild(0).Find("RoadEnd");
-			lastRoad.rotation = lastRoad.rotation * Quaternion.Euler (0f, 0f, -15f);
-			yield return new WaitForSeconds (spawnDelay);
-*/
+			//newRoad = Instantiate (roads [0], lastRoad.position, lastRoad.rotation * Quaternion.Euler (180f * Random.Range (0, 2), 0f, 15f)).GetComponent<Transform> ();
+			//lastRoad = newRoad.GetChild(0).Find("RoadEnd");
+			//lastRoad.rotation = lastRoad.rotation * Quaternion.Euler (0f, 0f, -15f);
+			//yield return new WaitForSeconds (spawnDelay);
+
 			newRoad = Instantiate (roads [Random.Range(0,x)], lastRoad.position, lastRoad.rotation 	* Quaternion.Euler(180f*Random.Range(0,2), 0f, 0f)).GetComponent<Transform> ();
 			lastRoad = newRoad.GetChild(0).Find("RoadEnd");
 			Debug.Log (newRoad.GetChild (0).name + " coordinates: " + newRoad.GetChild (0).Find ("RoadEnd").transform.eulerAngles);
@@ -78,10 +90,11 @@ public class RoadManager : MonoBehaviour
 			} 
 			yield return new WaitForSeconds (spawnDelay);
 		}
-    }
+	*/
+	}
 
+	int a = 0, b = 0, c = 0, d = 0, e = 0, treeProbability;
 	void setRoadProbabilities(float averageSpeed){
-		int a, b, c, d, e, treeProbability;
 		roadPick.Clear ();
 		if (averageSpeed <= 8) {
 			a = 50;
@@ -108,7 +121,7 @@ public class RoadManager : MonoBehaviour
 		}
 		else if (averageSpeed > 12 && averageSpeed < 14) {
 			a = 20;
-			b = 10;
+			b = 20;
 			c = 30;
 			d = 15;
 			e = 15;
@@ -158,9 +171,90 @@ public class RoadManager : MonoBehaviour
 			roadPick.Add (roads [roadType]);
 		}
 	}
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+	void addRoadSegmentsToSpawn(){
+		for (int i = 0; i < 10; i++) {
+			if (roadSpawn.Count > 0 && roadSpawn [roadSpawn.Count - 1].transform.GetChild (0).name == "road u turn") {
+				roadSpawn.Add (roadPick [Random.Range (0, 100 - e)]);
+			} else {
+				roadSpawn.Add (roadPick [Random.Range (0, 100)]);
+			}
+		}
+		Debug.Log (roadSpawn.Count);
+	}
+
+	IEnumerator wait(){
+		yield return new WaitForSeconds (0.02f);
+	}
+	// Update is called once per frame
+	void Update()
+	{
+			if (first == true && (score.seconds == 30 || score.seconds == 59)) {
+				setRoadProbabilities (score.averageSpeed);
+				addRoadSegmentsToSpawn ();
+				first = false;
+				Debug.Log ("Populating at:" + score.minutes + ":" + score.seconds);
+			}
+			if (score.seconds != 30 && score.seconds != 59) {
+				first = true;
+			}
+			if (roadToSpawnIncrement <= roadSpawn.Count - 1 ) {
+				if (roadCollisionScript.colliding == false){
+					newRoad = Instantiate (roadSpawn [roadToSpawnIncrement], lastRoad.position, lastRoad.rotation * Quaternion.Euler (180f * Random.Range (0, 2), 0f, 0f)).GetComponent<Transform> ();
+					lastRoad = newRoad.GetChild (0).Find ("RoadEnd");
+					roadToSpawnIncrement += 1;
+					Debug.Log ("InstantiatingRoad");
+					if (newRoad.GetChild (0).name == "road") {
+						r = newRoad.GetChild (0).GetChild (0).GetComponent<Renderer> ();
+					} else {
+						r = newRoad.GetChild (0).GetComponent<Renderer> ();
+					}
+					float randomX = Random.Range (r.bounds.min.x, r.bounds.max.x);
+					float randomZ = Random.Range (r.bounds.min.z, r.bounds.max.z);
+
+					RaycastHit hit;
+					if (Physics.Raycast (new Vector3 (randomX, r.bounds.max.y + 5f, randomZ), -Vector3.up, out hit)) {
+						GameObject collectibleSpawn = Instantiate (collectible, new Vector3 (randomX, r.bounds.max.y + 1f, randomZ), Quaternion.identity);
+						//collectibleSpawn.transform.parent = newRoad.GetChild (0).transform;
+						//GameObject treeSpawn =Instantiate (tree, new Vector3 (randomX, r.bounds.max.y, randomZ), Quaternion.Euler(-90f,0f,0f));
+						//treeSpawn.transform.parent = newRoad.GetChild (0).transform;
+					} 
+					Debug.Log ("Increment: " + roadToSpawnIncrement);
+					roadCollisionScript = newRoad.GetChild (0).GetComponent<CollisionDetection> ();
+				}
+			StartCoroutine (wait ());
+				if (roadCollisionScript.colliding == true) {
+					//newRoad.gameObject.active = false;
+					Debug.Log ("COLLISION DETECTED");
+					if (newRoad.GetChild (0).name == "road") {
+						newRoad.GetChild (0).GetChild (0).GetComponent<MeshRenderer> ().enabled = false;
+					} else {
+						newRoad.GetChild (0).gameObject.GetComponent<MeshRenderer> ().enabled = false;
+					}
+					if (roadCollisionScript.colliding == true) {
+						Debug.Log ("Waiting on collision to finish at" + score.minutes + ":" + score.seconds);
+						bool wait = false;
+						foreach (GameObject road in roadCollisionScript.intersectingRoad) {
+							if (road.tag != "FinishedContact") {
+								wait = true;
+							}
+						}
+						if (wait == false) {
+							Debug.Log ("Destroying roads");
+							foreach (GameObject road in roadCollisionScript.intersectingRoad) {
+								Destroy (road.transform.parent.gameObject);
+							}
+							roadCollisionScript.colliding = false;
+							if (newRoad.GetChild (0).name == "road") {
+								newRoad.GetChild (0).GetChild (0).GetComponent<MeshRenderer> ().enabled = true;
+							} else {
+								newRoad.GetChild (0).gameObject.GetComponent<MeshRenderer> ().enabled = true;
+							}
+						}
+					}
+				}
+
+				//yield return new WaitForSeconds (spawnDelay);
+			} 
+	}
 }
