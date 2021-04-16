@@ -52,6 +52,17 @@ public class RoadManager : MonoBehaviour
 						//GameObject treeSpawn =Instantiate (tree, new Vector3 (randomX, r.bounds.max.y, randomZ), Quaternion.Euler(-90f,0f,0f));
 						//treeSpawn.transform.parent = newRoad.GetChild (0).transform;
 					} 
+
+				if (Random.Range (0, 100) < treeProbability) {
+					randomX = Random.Range (r.bounds.min.x, r.bounds.max.x);
+					randomZ = Random.Range (r.bounds.min.z, r.bounds.max.z);
+
+		
+					if (Physics.Raycast (new Vector3 (randomX, r.bounds.max.y + 5f, randomZ), -Vector3.up, out hit)) {
+						GameObject treeSpawn = Instantiate (tree, new Vector3 (randomX, r.bounds.max.y, randomZ), Quaternion.Euler (-90f, 0f, 0f));
+						treeSpawn.transform.parent = newRoad.GetChild (0).transform;
+					} 
+				}
 					Debug.Log ("Increment: " + roadToSpawnIncrement);
 					roadCollisionScript = newRoad.GetChild (0).GetComponent<CollisionDetection> ();
 				yield return new WaitForSeconds (0.02f);

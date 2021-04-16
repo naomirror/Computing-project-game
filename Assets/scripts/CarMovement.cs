@@ -51,8 +51,14 @@ public class CarMovement : MonoBehaviour
 			brWheel.motorTorque = 0;
 		}
 		if (Input.GetAxis ("Horizontal") != 0) {
-			flWheel.steerAngle = lowSpeedSteeringAngle*Input.GetAxis ("Horizontal");
-			frWheel.steerAngle = lowSpeedSteeringAngle*Input.GetAxis ("Horizontal");
+			if (carVelocity < 28) {
+				flWheel.steerAngle = lowSpeedSteeringAngle * Input.GetAxis ("Horizontal");
+				frWheel.steerAngle = lowSpeedSteeringAngle * Input.GetAxis ("Horizontal");
+			}
+			if (carVelocity >= 28) {
+				flWheel.steerAngle = highSpeedSteeringAngle * Input.GetAxis ("Horizontal");
+				frWheel.steerAngle = highSpeedSteeringAngle * Input.GetAxis ("Horizontal");
+			}
 		} 
 
 		if (this.transform.position.y < -1f) {
@@ -77,7 +83,7 @@ public class CarMovement : MonoBehaviour
 		collision.transform.gameObject.tag = "InContact";
 
 		//Doesn't account for left hand turns flipping the parent 180degrees so car lands upside down. 
-		resetPosition = collision.transform.parent.position;
+		resetPosition = collision.transform.Find("Spawn").position;
 		resetPosition.y = resetPosition.y + 1f;
 		resetRotation = collision.transform.parent.rotation* Quaternion.Euler(0f,-90f,0f);
 
