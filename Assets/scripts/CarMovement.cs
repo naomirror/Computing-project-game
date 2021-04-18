@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CarMovement : MonoBehaviour
 {
@@ -10,11 +11,13 @@ public class CarMovement : MonoBehaviour
 	public float carVelocity;
 	// Start is called before the first frame update
 	public float torque, brakeTorque, maxSpeed, highSpeedSteeringAngle, lowSpeedSteeringAngle;
-
+	public AudioSource audio;
 	public Vector3 resetPosition;
 	public Quaternion resetRotation;
     void Start()
     {
+		audio = GetComponent<AudioSource> ();
+		audio.pitch = 0.4f	;
 		car.centerOfMass = new Vector3 (0.0f, -0.75f, .35f);
 		blWheel = backLeftWheel.GetComponent<WheelCollider> ();
 		brWheel = backRightWheel.GetComponent<WheelCollider> ();
@@ -60,9 +63,22 @@ public class CarMovement : MonoBehaviour
 				frWheel.steerAngle = highSpeedSteeringAngle * Input.GetAxis ("Horizontal");
 			}
 		} 
-
+		if (carVelocity < 5) {
+			audio.pitch = 0.4f;
+		} else if (carVelocity > 5 && carVelocity < 10) {
+			audio.pitch = 0.6f;
+		} else if (carVelocity > 10 && carVelocity < 15) {
+			audio.pitch = 0.8f;
+		} else if (carVelocity > 15 && carVelocity < 20) {
+			audio.pitch = 1.0f;
+		} else {
+			audio.pitch = 1.2f;
+		}
 		if (this.transform.position.y < -1f) {
 			resetCar ();
+		}
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			SceneManager.LoadScene (0);
 		}
 	}
 

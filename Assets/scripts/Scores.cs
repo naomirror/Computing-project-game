@@ -35,7 +35,7 @@ public class Scores : MonoBehaviour
 
 		averageSpeedText.text = "Average Speed: " + averageSpeed;
 		speedText.text = "Speed: " + Mathf.Round(cm.carVelocity);
-		collectiblesText.text = "Collectibles per minute: " + collected;
+		collectiblesText.text = "Collectibles: " + collected;
 		timeText.text = "Time: " + minutes + " mins " + seconds + " seconds";
     }
 
