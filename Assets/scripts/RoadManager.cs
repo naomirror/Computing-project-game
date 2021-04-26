@@ -19,7 +19,7 @@ public class RoadManager : MonoBehaviour
 	IEnumerator Start()
 	{
 		score = GameObject.Find ("Tocus").GetComponent<Scores> ();
-		setRoadProbabilities (13);
+		setRoadProbabilities (8);
 		addRoadSegmentsToSpawn ();
 		roadCollisionScript = lastRoad.parent.GetComponent<CollisionDetection>();
 		while (true) {
@@ -42,26 +42,35 @@ public class RoadManager : MonoBehaviour
 					} else {
 						r = newRoad.GetChild (0).GetComponent<Renderer> ();
 					}
-					float randomX = Random.Range (r.bounds.min.x, r.bounds.max.x);
-					float randomZ = Random.Range (r.bounds.min.z, r.bounds.max.z);
+				bool hasHit = false;
+				float randomX;
+				float randomZ;
+				RaycastHit hit;
+				while (!hasHit){
+					randomX = Random.Range (r.bounds.min.x, r.bounds.max.x);
+					randomZ = Random.Range (r.bounds.min.z, r.bounds.max.z);
 
-					RaycastHit hit;
 					if (Physics.Raycast (new Vector3 (randomX, r.bounds.max.y + 5f, randomZ), -Vector3.up, out hit)) {
 						GameObject collectibleSpawn = Instantiate (collectible, new Vector3 (randomX, r.bounds.max.y + 1f, randomZ), Quaternion.identity);
 						//collectibleSpawn.transform.parent = newRoad.GetChild (0).transform;
 						//GameObject treeSpawn =Instantiate (tree, new Vector3 (randomX, r.bounds.max.y, randomZ), Quaternion.Euler(-90f,0f,0f));
 						//treeSpawn.transform.parent = newRoad.GetChild (0).transform;
+						hasHit = true;
 					} 
-
+		}
 				if (Random.Range (0, 100) < treeProbability) {
-					randomX = Random.Range (r.bounds.min.x, r.bounds.max.x);
-					randomZ = Random.Range (r.bounds.min.z, r.bounds.max.z);
+					bool hasHitTree = false;
+					while (!hasHitTree) {
+						randomX = Random.Range (r.bounds.min.x, r.bounds.max.x);
+						randomZ = Random.Range (r.bounds.min.z, r.bounds.max.z);
 
 		
-					if (Physics.Raycast (new Vector3 (randomX, r.bounds.max.y + 5f, randomZ), -Vector3.up, out hit)) {
-						GameObject treeSpawn = Instantiate (tree, new Vector3 (randomX, r.bounds.max.y, randomZ), Quaternion.Euler (-90f, 0f, 0f));
-						treeSpawn.transform.parent = newRoad.GetChild (0).transform;
-					} 
+						if (Physics.Raycast (new Vector3 (randomX, r.bounds.max.y + 5f, randomZ), -Vector3.up, out hit)) {
+							GameObject treeSpawn = Instantiate (tree, new Vector3 (randomX, r.bounds.max.y, randomZ), Quaternion.Euler (-90f, 0f, 0f));
+							treeSpawn.transform.parent = newRoad.GetChild (0).transform;
+							hasHitTree = true;
+						} 
+					}
 				}
 					Debug.Log ("Increment: " + roadToSpawnIncrement);
 					roadCollisionScript = newRoad.GetChild (0).GetComponent<CollisionDetection> ();
