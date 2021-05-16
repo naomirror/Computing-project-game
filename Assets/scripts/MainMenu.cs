@@ -4,8 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
-	public void Play(){
+	public void PlayEndless(){
 		SceneManager.LoadScene (1);
+	}
+	public void PlayTimed(){
+		SceneManager.LoadScene (2);
 	}
 	public void Quit(){
 		Application.Quit ();

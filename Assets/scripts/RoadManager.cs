@@ -7,7 +7,6 @@ public class RoadManager : MonoBehaviour
 	public List<GameObject> roads, roadSpawn, roadPick;
 	public GameObject tree;
 	public GameObject collectible;
-	public GameObject roadBlock;
 	public Transform lastRoad;
 	public Transform newRoad;
 	public float spawnDelay = 1f;

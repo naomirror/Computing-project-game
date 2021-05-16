@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/comp project test.unity
     guid: 7f800732575281a40a2101a2a4e6a73b
+  - enabled: 1
+    path: Assets/TimedScene.unity
+    guid: 818a758cca71c3c4090cbc98375721a9
   m_configObjects: {}

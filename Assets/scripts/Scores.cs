@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class Scores : MonoBehaviour
 {
+	public GameObject HUD;
+	public GameObject leaderboard;
 	public Text speedText, collectiblesText, averageSpeedText, timeText;
 	public float averageSpeed;
 	public int collected = 0, minutes, seconds;
@@ -13,7 +15,11 @@ public class Scores : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		time = Time.time;
+		if (SceneManager.GetActiveScene ().buildIndex == 2) {
+			time = 300f;
+		} else {
+			time = Time.timeSinceLevelLoad;
+		}
 		cm = this.gameObject.GetComponent<CarMovement> ();
     }
 
@@ -22,7 +28,11 @@ public class Scores : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		time = Time.time;
+		if (SceneManager.GetActiveScene ().buildIndex == 2) {
+			time = time - Time.deltaTime;
+		} else {
+			time = Time.timeSinceLevelLoad;
+		}
 		minutes = Mathf.FloorToInt (time / 60);
 		seconds = Mathf.FloorToInt (time % 60);
 		if (seconds == 30 || seconds == 60) {
@@ -37,6 +47,12 @@ public class Scores : MonoBehaviour
 		speedText.text = "Speed: " + Mathf.Round(cm.carVelocity);
 		collectiblesText.text = "Collectibles: " + collected;
 		timeText.text = "Time: " + minutes + " mins " + seconds + " seconds";
+
+		if (SceneManager.GetActiveScene ().buildIndex == 2 && minutes == 0 && seconds == 0) {
+			Time.timeScale = 0;
+			HUD.SetActive (false);
+			leaderboard.SetActive (true);
+		}
     }
 
 	void OnCollisionEnter(Collision col){
