@@ -264,6 +264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0b63358c8fe594180b2dcce1ed487a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HUD: {fileID: 0}
+  leaderboard: {fileID: 0}
   speedText: {fileID: 782467039}
   collectiblesText: {fileID: 508670083}
   averageSpeedText: {fileID: 1333829609}
@@ -471,7 +473,6 @@ MonoBehaviour:
   roadPick: []
   tree: {fileID: 8068867624085191177, guid: aa5419eb08b872d4e8bea74fe0f8037d, type: 3}
   collectible: {fileID: 8223815472012122692, guid: 91b1078d30bd54b4e9d1f3da87d46dd8, type: 3}
-  roadBlock: {fileID: 919132149155446097, guid: f458b7732a59dbd40b7867ec1f574120, type: 3}
   lastRoad: {fileID: 1848127696}
   newRoad: {fileID: 0}
   spawnDelay: 1
